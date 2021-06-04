@@ -1,0 +1,49 @@
+<app-header></app-header>
+
+<div class="container">
+  <div class="row">
+    <div class="col-12 mt-5">
+      <table class="table table-bordered table-hover">
+        <thead class="bg-primary text-white">
+          <tr>
+            <th scope="col" *ngFor="let item of tableHeader">{{ item }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of data; let i = index">
+            <td>
+              <input type="checkbox" (click)="getId(item.id, (item.isCheck = !item.isCheck))" />
+            </td>
+            <th scope="row">{{ item.id }}</th>
+            <td>{{ item.url }}</td>
+            <td>{{ item.time.start }}</td>
+            <td>{{ item.time.end }}</td>
+            <td>{{ item.time.duration + ' sec(s)' }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12 mt-3">
+      <button type="button" class="btn btn-primary me-2" (click)="action('start')">START</button>
+      <button type="button" class="btn btn-primary" (click)="action('end')">END</button>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12 mt-3">
+      <div class="input-group">
+        <input type="text" class="form-control" placeholder="Website URL" [(ngModel)]="url" (ngModelChange)="reload()" />
+        <button class="btn btn-outline-primary" type="submit" (click)="add()">SAVE HTML</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12 mt-3 mb-5">
+      <iframe [src]="current_url" height="600" width="100%"></iframe>
+    </div>
+  </div>
+</div>
