@@ -42,7 +42,10 @@ export class UserStoriesComponent implements OnInit {
     this.ids.filter((v) => {
       result = this.data.map((res: IData) => {
         if (v !== res.id) return res;
-        if (action === 'start') window.open(res.url, '_blank');
+        if (action === 'start') {
+          this.url = res.url;
+          this.reload();
+        }
         const date = new Date().toLocaleString();
         const time = action === 'start' ? { start: date } : { end: date, duration: this.duration(res.time.start, date) };
         return { ...res, isCheck: false, time: { ...res.time, ...time } };
