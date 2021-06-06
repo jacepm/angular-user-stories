@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MockDataService } from '../services/mock-data.service';
+import { saveAs } from 'file-saver';
 
 interface IData {
   id: number;
@@ -64,6 +65,12 @@ export class UserStoriesComponent implements OnInit {
 
   add() {
     this.data = [...this.data, { url: this.url, id: 1001 + this.data.length, time: { start: '', end: '', duration: 0 }, isCheck: false }];
+  }
+
+  saveHtml() {
+    const blob = new Blob([this.url], { type: 'text/html' });
+    const fileName = this.url.replace(/^https?\:\/\/(www.)?/, '').replace('.com', '');
+    saveAs(blob, `${fileName}.html`);
   }
 
   reload() {
