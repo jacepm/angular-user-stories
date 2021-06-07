@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MockDataService } from '../services/mock-data.service';
-import { saveAs } from 'file-saver';
 import { HttpClient } from '@angular/common/http';
 
 interface IData {
@@ -26,6 +25,7 @@ export class UserStoriesComponent implements OnInit {
   ids: number[] = [];
   url: string = 'https://www.google.com';
   current_url: any;
+  result = { message: '', status: '' };
 
   constructor(private mockData: MockDataService, private sanitizer: DomSanitizer, private http: HttpClient) {}
 
@@ -69,7 +69,13 @@ export class UserStoriesComponent implements OnInit {
   }
 
   saveHtml() {
-    this.http.get(`http://localhost:3333/download?url=${this.url}`).subscribe();
+    this.http.get(`http://localhost:3333/download?url=${this.url}`).subscribe((result: any) => {
+      this.result = result;
+    });
+  }
+
+  close() {
+    this.result = { message: '', status: '' };
   }
 
   reload() {
