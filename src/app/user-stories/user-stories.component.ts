@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MockDataService } from '../services/mock-data.service';
 import { saveAs } from 'file-saver';
+import { HttpClient } from '@angular/common/http';
 
 interface IData {
   id: number;
@@ -26,7 +27,7 @@ export class UserStoriesComponent implements OnInit {
   url: string = 'https://www.google.com';
   current_url: any;
 
-  constructor(private mockData: MockDataService, private sanitizer: DomSanitizer) {}
+  constructor(private mockData: MockDataService, private sanitizer: DomSanitizer, private http: HttpClient) {}
 
   ngOnInit(): void {
     this.data = this.mockData.data;
@@ -68,9 +69,7 @@ export class UserStoriesComponent implements OnInit {
   }
 
   saveHtml() {
-    const blob = new Blob([this.url], { type: 'text/html' });
-    const fileName = this.url.replace(/^https?\:\/\/(www.)?/, '').replace('.com', '');
-    saveAs(blob, `${fileName}.html`);
+    this.http.get(`http://localhost:3333/download?url=${this.url}`).subscribe();
   }
 
   reload() {
