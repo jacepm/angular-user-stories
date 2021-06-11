@@ -34,9 +34,9 @@
 
   <div class="row" *ngIf="result.status && result.message">
     <div class="col-12 mt-3">
-      <div class="alert alert-{{ result.status }}" role="alert">
+      <div class="alert alert-{{ result.status }} alert-dismissible fade show" role="alert">
         {{ result.message }}
-        <button type="button" class="btn-close" aria-label="Close" (click)="close()"></button>
+        <button type="button" class="btn-close" (click)="close()"></button>
       </div>
     </div>
   </div>
